@@ -27,6 +27,63 @@ function regularShape(edges, x, y, step) {
   
   return result
 }
+/**
+ * @param {Number} x0 
+ * @param {Number} y0 
+ * @param {Number} radius 
+ * @param {Number} startAng 
+ * @param {Number} endAng 
+ */
+function arc(x0, y0, radius, startAng = 0, endAng = Math.PI * 2) {
+  const ang = Math.min(Math.PI * 2, endAng - startAng)
+  const ret = ang === Math.PI * 2 ? [] : [[x0, y0]]
+  const sgements = 360 * ang / Math.PI * 2
+  for (let i = 0; i <= sgements; i++) {
+    const targetAng = startAng + ang * i / sgements
+    const x = x0 + radius * Math.cos(targetAng)
+    const y = y0 + radius * Math.sin(targetAng)
+    ret.push([x, y])
+  }
+  return ret
+}
+/**
+ * @param {Number} x0 
+ * @param {Number} y0 
+ * @param {Number} radiusX 
+ * @param {Number} radiusY 
+ * @param {Number} startAng 
+ * @param {Number} endAng 
+ */
+function ellipse(x0, y0, radiusX, radiusY, startAng = 0, endAng = Math.PI * 2) {
+  const ang = Math.min(Math.PI * 2, endAng - startAng)
+  const ret = ang === Math.PI * 2 ? [] : [[x0, y0]]
+  const sgements = 360 * ang / Math.PI * 2
+  for (let i = 0; i <= sgements; i++) {
+    const targetAng = startAng + ang * i / sgements
+    const x = x0 + radiusX * Math.cos(targetAng)
+    const y = y0 + radiusY * Math.sin(targetAng)
+    ret.push([x, y])
+  }
+  return ret
+}
+/**
+ * @param {Number} x0 
+ * @param {Number} y0 
+ * @param {Number} p 
+ * @param {Number} min 
+ * @param {Number} max 
+ */
+function parabola(x0, y0, p, min, max) {
+  const ret = []
+  for (let i = 0; i < 60; i++) {
+    const s = i / 60
+    const t = min * (1 - s) + max * s
+    const x = x0 + 2 *p * t ** 2
+    const y = y0 + 2 * p * t
+    ret.push([x, y])
+  }
+  return ret
+}
 
 function draw(points, strokeStyle = 'black', fillStyle = null) {
   ctx.strokeStyle = strokeStyle;
@@ -44,7 +101,13 @@ function draw(points, strokeStyle = 'black', fillStyle = null) {
 }
 
 draw(regularShape(3, 128, 128, 100));
-draw(regularShape(6, -64, 128, 50));
+// draw(regularShape(6, -64, 128, 50));
 
-draw(regularShape(11, -64, -64, 30));
-draw(regularShape(60, 128, -64, 6));
+// draw(regularShape(11, -64, -64, 30));
+// draw(regularShape(60, 128, -64, 6));
+
+draw(arc(0, -200, 50))
+
+draw(ellipse(0, 80, 70, 50))
+
+draw(parabola(0, 0, 5.5, -10, 10))
