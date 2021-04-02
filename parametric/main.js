@@ -34,12 +34,10 @@ const helical = parametric(
   (t, l) => l * t * Math.cos(t),
   (t, l) => l * t * Math.sin(t),
 )
-
 helical(0, Math.PI * 2 * 8, 500, 5).draw(ctx, { strokeStyle: 'blue' })
 
 const star = parametric(
   (t, l) => l * Math.cos(t) ** 3,
   (t, l) => l * Math.sin(t) ** 3,
 )
-
 star(0, Math.PI * 2, 50, 150).draw(ctx, {strokeStyle: 'red'})
